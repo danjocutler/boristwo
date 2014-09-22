@@ -8,19 +8,17 @@ def fill_holder(holder)
 		holder.capacity.times { holder.dock(bike) }
 	end	
 
-	let (:bike) { Bike.new }
-	let (:holder) { ContainerHolder.new }
+	let(:bike) { double :bike, broken?: false, :class => Bike }
+	let (:broken_bike) {double :bike, broken?: true, :class => Bike}
+	let(:holder) { ContainerHolder.new }
 	
 	it "should accept a bike" do
-		expect(holder.bike_count).to eq(0)
-		holder.dock(bike)
-		expect(holder.bike_count).to eq(1)
+		expect{holder.dock(bike)}.to change{holder.bike_count}.by 1
 	end
 
 	it "should release a bike" do
 		holder.dock(bike)
-		holder.release(bike)
-		expect(holder.bike_count).to eq(0)
+		expect{holder.release(bike)}.to change{holder.bike_count}.by -1
 	end
 
 	it "should know when it's full" do
@@ -34,24 +32,19 @@ def fill_holder(holder)
 	end
 
 	it "should provide the list of available bikes" do
-		working_bike, broken_bike = Bike.new, Bike.new
-		broken_bike.break!
-		holder.dock(working_bike)
+		holder.dock(bike)
 		holder.dock(broken_bike)
-		expect(holder.available_bikes).to eq([working_bike])
+		expect(holder.available_bikes).to eq([bike])
 	end
 
 	it "should provide a list of broken bikes" do
-		working_bike, broken_bike = Bike.new, Bike.new
-		broken_bike.break!
-		holder.dock(working_bike)
+		holder.dock(bike)
 		holder.dock(broken_bike)
 		expect(holder.broken_bikes).to eq([broken_bike])
 	end
 
 	it "should not release anything that is not a bike" do
-		bike = "Dan", [1, 2, 3]
-		expect { holder.release(bike) }.to raise_error "You have not released a bike"
+		expect { holder.release("not bike") }.to raise_error "You have not released a bike"
 	end
 
 	it "should not release a bike if empty" do		

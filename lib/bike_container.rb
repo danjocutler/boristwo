@@ -24,6 +24,7 @@ module BikeContainer
 	end
 
 	def release(bike)
+		puts bike.class
 		raise "You have not released a bike" if bike.class != Bike
 		raise "Sorry. There are no bikes here" if empty?
 		bikes.delete(bike)
