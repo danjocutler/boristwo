@@ -22,5 +22,4 @@ class Van
 		van.release(available_bikes)
 		end
 	end
-
 end

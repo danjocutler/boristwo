@@ -4,7 +4,7 @@ class ContainerHolder; include BikeContainer; end
 
 describe BikeContainer do
 
-def fill_holder(holder)
+	def fill_holder(holder)
 		holder.capacity.times { holder.dock(bike) }
 	end	
 
