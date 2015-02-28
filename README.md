@@ -1,5 +1,6 @@
 BORIS BIKES
 ===========
+[![Code Climate](https://codeclimate.com/github/danjocutler/boristwo/badges/gpa.svg)](https://codeclimate.com/github/danjocutler/boristwo)
 Take 2
 ---
 
